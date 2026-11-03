@@ -15,7 +15,8 @@ ZIP="dist/sso-authentication_${VERSION}.zip"
 rm -rf dist
 mkdir -p dist/stage
 
-dotnet publish SSO-Auth/SSO-Auth.csproj -c Release -o dist/publish --nologo
+dotnet publish SSO-Auth/SSO-Auth.csproj -c Release -o dist/publish --nologo \
+  -p:ContinuousIntegrationBuild=true -p:Deterministic=true
 
 python3 scripts/gen_meta.py > /dev/null
 cp dist/meta.json dist/stage/meta.json
