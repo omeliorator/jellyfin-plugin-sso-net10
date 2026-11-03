@@ -1,39 +1,41 @@
+name: Plugin build (net10 / Jellyfin 12.x)
+
+# Replaces the archived upstream JPRM flow: builds OUR 4.1.1.0 artifact from a
+# clean checkout, writes meta.json from build.yaml, pins the sha256 as an
+# uploaded artifact, and enforces the DES-007 §10.5 gate checks.
 on:
-  workflow_call:
-    inputs:
-      dotnet-version:
-        required: false
-        default: "9.0.x"
-        description: "The .NET version to setup for the build"
-        type: string
-      dotnet-target:
-        required: false
-        default: "net9.0"
-        description: "The .NET target to set for JPRM"
-        type: string
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v1
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: "${{ inputs.dotnet-version }}"
+          dotnet-version: "10.0.x"
 
-      - name: Build Jellyfin Plugin
-        uses: oddstr13/jellyfin-plugin-repository-manager@9497a0a499416cc572ed2e07a391d9f943a37b4d # v1.1.1
-        id: jprm
-        with:
-          dotnet-target: "${{ inputs.dotnet-target }}"
+      - name: Build artifact
+        run: bash scripts/build.sh
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # tag=v4.6.2
+      - name: Gate checks
+        run: bash scripts/verify_artifact.sh
+
+      - name: Upload artifact + sha256
+        uses: actions/upload-artifact@v4
         with:
-          name: build-artifact
-          retention-days: 30
+          name: sso-authentication
           if-no-files-found: error
-          path: ${{ steps.jprm.outputs.artifact }}
+          path: |
+            dist/sso-authentication_*.zip
+            dist/sso-authentication_*.zip.sha256

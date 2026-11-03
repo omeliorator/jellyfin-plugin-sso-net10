@@ -449,3 +449,6 @@ $RECYCLE.BIN/
 ##
 .vscode/*
 .vscode
+
+# Local build output (artifact is uploaded by CI, sha256 is committed under artifacts/)
+dist/
