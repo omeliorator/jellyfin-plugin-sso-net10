@@ -452,3 +452,7 @@ $RECYCLE.BIN/
 
 # Local build output (artifact is uploaded by CI, sha256 is committed under artifacts/)
 dist/
+
+# Pinned artifact digests are tracked (upstream ignores "artifacts/" as a .NET build dir)
+!artifacts/
+!artifacts/**
