@@ -57,3 +57,11 @@ sha256. `dotnet.yml` is retargeted to .NET 10.
 Directory-scan plugin, installed at `/config/plugins/SSO-Auth/`; the config file
 stays at `/config/plugins/configurations/SSO-Auth.xml` (`SSOPlugin.Name` is the
 literal `SSO-Auth`). OIDC redirect path is unchanged: `/sso/OID/redirect/<provider>`.
+
+## CI jobs
+
+`build.yml` is the only job that matters (build + gate checks + artifact
+upload). `dotnet.yml` is retargeted to .NET 10 and builds the solution.
+`prettier.yml` (upstream's documentation-formatting lint) is removed: this fork
+is not upstream's docs pipeline and its only finding was FORK.md's formatting.
+`publish.yml` / `publish-nightly.yml` are removed: nothing is published from here.
