@@ -22,12 +22,13 @@ NAMES = [
 
 def main():
     stage, out, epoch = sys.argv[1], sys.argv[2], int(sys.argv[3])
+    names = sys.argv[4:] or NAMES
     stamp = time.gmtime(epoch)[:6]
     if stamp[0] < 1980:  # zip format floor
         stamp = (1980, 1, 1, 0, 0, 0)
     os.makedirs(os.path.dirname(out), exist_ok=True)
     with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as zf:
-        for name in NAMES:
+        for name in names:
             path = os.path.join(stage, name)
             if not os.path.exists(path):
                 raise SystemExit(f"missing staged file: {path}")

@@ -1,0 +1,15 @@
+{
+    "category": "General",
+    "changelog": "12.0.6.0: Jellyfin 12.x line (upstream release 12.0/v12.0.6.0, 2026-10-23). Manifest authored here because the upstream release zip ships only IntroSkipper.dll.",
+    "description": "Analyzes media files for introduction sequences and adds a skip-intro button. Upstream: https://github.com/intro-skipper/intro-skipper",
+    "guid": "c83d86bb-a1e0-4c35-a113-e2101cf4ee6b",
+    "name": "Intro Skipper",
+    "overview": "Skip intros and outros in TV episodes.",
+    "owner": "intro-skipper",
+    "targetAbi": "12.0.0.0",
+    "timestamp": "2026-10-23T19:18:11Z",
+    "version": "12.0.6.0",
+    "status": "Active",
+    "autoUpdate": false,
+    "assemblies": []
+}
